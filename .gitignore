@@ -1,0 +1,5 @@
+Voice.egg-info
+build
+dist
+*.pyc
+*~

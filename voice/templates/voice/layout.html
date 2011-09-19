@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+        <link rel="stylesheet" href="{% url voice-media "styles/bootstrap.css" %}" type="text/css" media="screen" charset="utf-8">
+        <link rel="stylesheet" href="{% url voice-media "styles/layout.css" %}" type="text/css" media="screen" charset="utf-8">
+    </head>
+    <body>
+        <div class="topbar">
+          <div class="topbar-inner">
+            <div class="container-fluid">
+                <h3><a href="{% url voice-index %}">Voice</a></h3>
+              <ul class="nav">
+                  <li class="active">
+                      <a href="{% url voice-index %}">Home</a>
+                  </li>
+                <li><a href="#">Link</a></li>
+                <li><a href="#">Link</a></li>
+                <li><a href="#">Link</a></li>
+              </ul>
+              <form class="pull-left" action="">
+                <input type="text" placeholder="Search">
+              </form>
+              {% if request.user.is_authenticated %}
+              <ul class="nav secondary-nav">
+                  <li>
+                      <a href="{% url voice-admin %}">Admin</a>
+                  </li>
+              </ul>
+              {% endif %}
+            </div>
+          </div><!-- /topbar-inner -->
+        </div><!-- /topbar -->
+        <div class='container-fluid'>
+        {% block body %}
+        <div class='sidebar'>
+            <div class='well'>
+            {% block sidebar %}
+            {% endblock %}
+            </div>
+        </div>
+        <!-- end sidebar -->
+        <div class='content'>
+        {% block content %}
+        <header>
+        {% block header %}
+        {% endblock %}
+        </header>
+        <section>
+        {% block main %}
+        {% endblock %}
+        </section>
+        <footer>
+        {% block footer %}
+            <p>&copy; MindSnacks 2011</p>
+        {% endblock %}
+        </footer>
+        {% endblock %}
+        </div>
+        <!-- end content -->
+        {% endblock %}
+        </div>
+        <!-- end container-fluid -->
+    </body>
+</html>
