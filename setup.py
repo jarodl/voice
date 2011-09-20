@@ -9,8 +9,6 @@ except ImportError:
 
 tests_require = [
     'Django>=1.3.1',
-    'nose',
-    'unittest2',
 ]
 
 setup(
