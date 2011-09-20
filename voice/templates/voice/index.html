@@ -3,7 +3,7 @@
 {% block sidebar %}
 <h6>Sidebar</h6>
 <ul>
-    <li><a href="#">Languages</a></li>
+    <li><a href="#">Requests</a></li>
     <li><a href="#">Link</a></li>
     <li><a href="#">Link</a></li>
     <li><a href="#">Link</a></li>
@@ -11,61 +11,30 @@
 {% endblock %}
 
 {% block header %}
-<h1>Languages</h1>
+<h1>Requests</h1>
 {% endblock %}
 
 {% block main %}
+{% for group in user_requests %}
+
 <div class='row'>
+
+    {% for user_request in group %}
+
     <div class='span4'>
-        <h3>Option 1</h3>
-        <p>Gentrify brunch VHS, aesthetic pitchfork DIY wes anderson tattooed banh mi blog before they sold out put a bird on it butcher. Brooklyn sustainable mustache fixie. Salvia scenester carles, portland american apparel fanny pack lomo hoodie butcher whatever.</p>
-        <h6>321 votes needed</h6>
+        <h3>{{ user_request.title }}</h3>
+        <p>{{ user_request.description }}</p>
+        <h6>{{ user_request.votes_needed }} votes needed</h6>
         <a class='btn' href='#'>Submit a vote</a>
     </div>
-    <div class='span4'>
-        <h3>Option 2</h3>
-        <p>Gentrify brunch VHS, aesthetic pitchfork DIY wes anderson tattooed banh mi blog before they sold out put a bird on it butcher. Brooklyn sustainable mustache fixie. Salvia scenester carles, portland american apparel fanny pack lomo hoodie butcher whatever.</p>
-        <h6>321 votes needed</h6>
-        <a class='btn' href='#'>Submit a vote</a>
-    </div>
-    <div class='span4'>
-        <h3>Option 3</h3>
-        <p>Gentrify brunch VHS, aesthetic pitchfork DIY wes anderson tattooed banh mi blog before they sold out put a bird on it butcher. Brooklyn sustainable mustache fixie. Salvia scenester carles, portland american apparel fanny pack lomo hoodie butcher whatever.</p>
-        <h6>321 votes needed</h6>
-        <a class='btn' href='#'>Submit a vote</a>
-    </div>
-    <div class='span4'>
-        <h3>Option 4</h3>
-        <p>Gentrify brunch VHS, aesthetic pitchfork DIY wes anderson tattooed banh mi blog before they sold out put a bird on it butcher. Brooklyn sustainable mustache fixie. Salvia scenester carles, portland american apparel fanny pack lomo hoodie butcher whatever.</p>
-        <h6>321 votes needed</h6>
-        <a class='btn' href='#'>Submit a vote</a>
-    </div>
+
+    {% endfor %}
+
 </div>
+
+{% if not forloop.last %}
 <hr>
-<div class='row'>
-    <div class='span4'>
-        <h3>Option 1</h3>
-        <p>Gentrify brunch VHS, aesthetic pitchfork DIY wes anderson tattooed banh mi blog before they sold out put a bird on it butcher. Brooklyn sustainable mustache fixie. Salvia scenester carles, portland american apparel fanny pack lomo hoodie butcher whatever.</p>
-        <h6>321 votes needed</h6>
-        <a class='btn' href='#'>Submit a vote</a>
-    </div>
-    <div class='span4'>
-        <h3>Option 2</h3>
-        <p>Gentrify brunch VHS, aesthetic pitchfork DIY wes anderson tattooed banh mi blog before they sold out put a bird on it butcher. Brooklyn sustainable mustache fixie. Salvia scenester carles, portland american apparel fanny pack lomo hoodie butcher whatever.</p>
-        <h6>321 votes needed</h6>
-        <a class='btn' href='#'>Submit a vote</a>
-    </div>
-    <div class='span4'>
-        <h3>Option 3</h3>
-        <p>Gentrify brunch VHS, aesthetic pitchfork DIY wes anderson tattooed banh mi blog before they sold out put a bird on it butcher. Brooklyn sustainable mustache fixie. Salvia scenester carles, portland american apparel fanny pack lomo hoodie butcher whatever.</p>
-        <h6>321 votes needed</h6>
-        <a class='btn' href='#'>Submit a vote</a>
-    </div>
-    <div class='span4'>
-        <h3>Option 4</h3>
-        <p>Gentrify brunch VHS, aesthetic pitchfork DIY wes anderson tattooed banh mi blog before they sold out put a bird on it butcher. Brooklyn sustainable mustache fixie. Salvia scenester carles, portland american apparel fanny pack lomo hoodie butcher whatever.</p>
-        <h6>321 votes needed</h6>
-        <a class='btn' href='#'>Submit a vote</a>
-    </div>
-</div>
+{% endif %}
+
+{% endfor %}
 {% endblock %}

@@ -1,11 +1,25 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect, \
         Http404, HttpResponseNotModified
+
 from voice import settings
+from voice.models import Request
 
 def index(request):
+    grouped_requests = []
+    group = []
+    all_requests = Request.objects.all()
+    for i, request in enumerate(all_requests):
+        group.append(request)
+        if (i + 1) % 4 == 0:
+            grouped_requests.append(group)
+            group = []
+    if len(group) > 0:
+        grouped_requests.append(group)
+
     return render_to_response('voice/index.html', {
         'request': request,
+        'user_requests': grouped_requests,
         })
 
 def admin(request):
