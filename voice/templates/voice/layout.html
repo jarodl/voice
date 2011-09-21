@@ -4,6 +4,8 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
         <link rel="stylesheet" href="{% url voice-media "styles/bootstrap.css" %}" type="text/css" media="screen" charset="utf-8">
         <link rel="stylesheet" href="{% url voice-media "styles/layout.css" %}" type="text/css" media="screen" charset="utf-8">
+        <script type="text/javascript" charset="utf-8" src="{% url voice-media "scripts/jquery.js" %}"></script>
+        <script type="text/javascript" charset="utf-8" src="{% url voice-media "scripts/bootstrap-modal.js" %}"></script>
     </head>
     <body>
         <div class="topbar">
@@ -52,8 +54,8 @@
         </section>
         <footer>
         {% block footer %}
-            <p>&copy; MindSnacks 2011</p>
         {% endblock %}
+            <p>&copy; MindSnacks 2011</p>
         </footer>
         {% endblock %}
         </div>
