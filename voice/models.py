@@ -21,6 +21,9 @@ class Vote(models.Model):
     used_twitter = models.BooleanField(default=False)
     used_facebook = models.BooleanField(default=False)
 
+    class Meta:
+        unique_together = (('request', 'voter'),)
+
     def __unicode__(self):
         return self.voter
 

@@ -1,4 +1,5 @@
 from django.utils import unittest
+from django.db import IntegrityError
 from voice.models import Request, Vote
 
 class RequestTestCase(unittest.TestCase):
@@ -31,3 +32,9 @@ class VoteTestCase(unittest.TestCase):
         voter = 'v@d.com'
         vote = Vote.objects.create(request=self.request, voter=voter)
         self.assertEqual(voter, str(vote))
+
+    def testDisallowDuplicates(self):
+        voter = 'v@d.com'
+        vote = Vote.objects.create(request=self.request, voter=voter)
+        self.assertRaises(IntegrityError, Vote.objects.create,
+                request=self.request, voter=voter)

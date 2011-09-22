@@ -9,6 +9,7 @@ from voice.models import Request
 from voice.forms import VoteForm
 
 def index(request):
+    request_id = None
     if request.method == 'POST':
         form = VoteForm(request.POST)
         request_id = request.POST.get('request')
