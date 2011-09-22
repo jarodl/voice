@@ -19,6 +19,9 @@ class Request(models.Model):
         else:
             return 0
 
+    def total_votes(self):
+        return len(self.votes.all())
+
     def __unicode__(self):
         return self.title
 

@@ -1,1 +1,44 @@
 {% extends "voice/layout.html" %}
+{% load request_extras %}
+
+{% block scripts %}
+    <script type="text/javascript" charset="utf-8" src="{% url voice-media "scripts/tablesorter.js" %}"></script>
+{% endblock %}
+
+{% block main %}
+<ul class="tabs">
+    <li class="active"><a href="#">All</a></li>
+    <li><a href="#">Pending</a></li>
+    <li><a href="#">Needs Work</a></li>
+    <li><a href="#">Finished</a></li>
+</ul>
+<h1>All Requests</h1>
+<table class="zebra-striped" id="sortTableExample">
+    <thead>
+      <tr>
+        <th class="blue header">Title</th>
+        <th class="green header">Description</th>
+        <th class="yellow header">Status</th>
+        <th class="header headerSortDown">Votes</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for user_request in user_requests %}
+        <tr>
+            <td>{{ user_request.title }}</td>
+            <td>{{ user_request.description|truncatewords:12 }}</td>
+            <td>{{ user_request|state }}</td>
+            <td>{{ user_request|votes }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+{% block endscripts %}
+<script >
+  $(function() {
+    $("table#sortTableExample").tablesorter({ sortList: [[3,1]] });
+  });
+</script>
+{% endblock %}

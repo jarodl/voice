@@ -42,8 +42,10 @@ def index(request):
     return render_to_response('voice/index.html', context)
 
 def admin(request):
+    user_requests = Request.objects.all()
     return render_to_response('voice/admin.html', {
         'request': request,
+        'user_requests': user_requests,
         })
 
 def static_media(request, path):

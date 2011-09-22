@@ -10,6 +10,8 @@
         <script type="text/javascript" charset="utf-8" src="{% url voice-media "scripts/jquery.js" %}"></script>
         <script type="text/javascript" charset="utf-8" src="{% url voice-media "scripts/bootstrap-modal.js" %}"></script>
         <script type="text/javascript" charset="utf-8" src="{% url voice-media "scripts/bootstrap-alerts.js" %}"></script>
+        {% block scripts %}
+        {% endblock %}
     </head>
     <body>
         <div class="topbar">
@@ -50,4 +52,6 @@
         </div>
         <!-- end container-fluid -->
     </body>
+    {% block endscripts %}
+    {% endblock %}
 </html>

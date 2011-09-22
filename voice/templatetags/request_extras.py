@@ -9,3 +9,7 @@ def votes_left(request):
 @register.filter
 def state(request):
     return request.get_state_display()
+
+@register.filter
+def votes(request):
+    return request.total_votes()
