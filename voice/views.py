@@ -36,6 +36,7 @@ def index(request):
         'user_requests': grouped_requests,
         'vote_form': form,
         'request_id': request_id,
+        'request': request,
         })
 
     return render_to_response('voice/index.html', context)

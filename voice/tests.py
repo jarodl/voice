@@ -38,3 +38,17 @@ class VoteTestCase(unittest.TestCase):
         vote = Vote.objects.create(request=self.request, voter=voter)
         self.assertRaises(IntegrityError, Vote.objects.create,
                 request=self.request, voter=voter)
+
+    def testDecreasesVotesNeeded(self):
+        for i in range(0, self.request.votes_needed):
+            voter = 'voter%d@domain.com' % i
+            vote = Vote.objects.create(request=self.request, voter=voter)
+
+        self.assertEqual(self.request.votes_left(), 0)
+
+        for i in range(self.request.votes_needed + 1,
+                self.request.votes_needed * 2):
+            voter = 'voter%d@domain.com' % i
+            vote = Vote.objects.create(request=self.request, voter=voter)
+
+        self.assertEqual(self.request.votes_left(), 0)

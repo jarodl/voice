@@ -1,4 +1,5 @@
 {% extends "voice/layout.html" %}
+{% load request_extras %}
 
 {% block header %}
 <h1>Requests</h1>
@@ -52,10 +53,14 @@
     <div class='span4'>
         <h3>{{ user_request.title }}</h3>
         <p>{{ user_request.description }}</p>
-        <h6>{{ user_request.votes_needed }} votes needed</h6>
-        <a class='btn' data-controls-modal="vote-for-{{ user_request.id }}" data-backdrop="true" data-keyboard="true" class="btn danger">
-            Submit a vote
-        </a>
+        {% if user_request|votes_left > 0 %}
+            <h6>{{ user_request|votes_left }} votes needed</h6>
+            <a class='btn' data-controls-modal="vote-for-{{ user_request.id }}" data-backdrop="true" data-keyboard="true" class="btn danger">
+                Submit a vote
+            </a>
+        {% else %}
+            <h6>Status: {{ user_request|state }}</h6>
+        {% endif %}
     </div>
 
     <div id="vote-for-{{ user_request.id }}" class="modal hide fade">

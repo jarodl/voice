@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+        {% block title %}
+        <title>Voice</title>
+        {% endblock %}
         <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
         <link rel="stylesheet" href="{% url voice-media "styles/bootstrap.css" %}" type="text/css" media="screen" charset="utf-8">
         <link rel="stylesheet" href="{% url voice-media "styles/layout.css" %}" type="text/css" media="screen" charset="utf-8">
@@ -13,18 +16,13 @@
           <div class="topbar-inner">
             <div class="container">
                 <h3><a href="{% url voice-index %}">Voice</a></h3>
-              <ul class="nav">
-                  <li class="active">
-                      <a href="{% url voice-index %}">Home</a>
-                  </li>
-              </ul>
-              {% if request.user.is_authenticated %}
-              <ul class="nav secondary-nav">
+                {% if request.user.is_authenticated %}
+                <ul class="nav secondary-nav">
                   <li>
                       <a href="{% url voice-admin %}">Admin</a>
                   </li>
-              </ul>
-              {% endif %}
+                </ul>
+                {% endif %}
             </div>
           </div><!-- /topbar-inner -->
         </div><!-- /topbar -->
@@ -43,7 +41,7 @@
         <footer>
         {% block footer %}
         {% endblock %}
-            <p>&copy; MindSnacks 2011</p>
+        <p>Powered by <a href='http://github.com/jarodl/voice'>Voice</a></p>
         </footer>
         {% endblock %}
         </div>

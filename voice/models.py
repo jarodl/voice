@@ -12,6 +12,13 @@ class Request(models.Model):
     votes_needed = models.IntegerField()
     created = models.DateField(auto_now_add=True)
 
+    def votes_left(self):
+        votes_left = self.votes_needed - len(self.votes.all())
+        if votes_left >= 0:
+            return votes_left
+        else:
+            return 0
+
     def __unicode__(self):
         return self.title
 
@@ -29,6 +36,7 @@ class Vote(models.Model):
 
     def save(self, *args, **kwargs):
         super(Vote, self).save(*args, **kwargs)
-        if self.request.votes_needed <= self.request.votes.count():
+        self.request.save()
+        if self.request.votes_left() == 0:
             self.request.state = 'W'
             self.request.save()
