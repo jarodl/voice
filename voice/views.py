@@ -1,26 +1,43 @@
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect, \
         Http404, HttpResponseNotModified
+from django.contrib import messages
 
 from voice import settings
 from voice.models import Request
+from voice.forms import VoteForm
 
 def index(request):
+    if request.method == 'POST':
+        form = VoteForm(request.POST)
+        request_id = request.POST.get('request')
+        if form.is_valid():
+            vote = form.save(commit=False)
+            vote.request = Request.objects.get(id=request_id)
+            vote.save()
+            messages.success(request, 'Vote successfully submitted!')
+    else:
+        form = VoteForm()
+
     grouped_requests = []
     group = []
     all_requests = Request.objects.all()
-    for i, request in enumerate(all_requests):
-        group.append(request)
+    for i, user_request in enumerate(all_requests):
+        group.append(user_request)
         if (i + 1) % 4 == 0:
             grouped_requests.append(group)
             group = []
     if len(group) > 0:
         grouped_requests.append(group)
 
-    return render_to_response('voice/index.html', {
-        'request': request,
+    context = RequestContext(request, {
         'user_requests': grouped_requests,
+        'vote_form': form,
+        'request_id': request_id,
         })
+
+    return render_to_response('voice/index.html', context)
 
 def admin(request):
     return render_to_response('voice/admin.html', {

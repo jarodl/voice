@@ -74,6 +74,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
 ROOT_URLCONF = 'example_project.urls'
 
 TEMPLATE_DIRS = (

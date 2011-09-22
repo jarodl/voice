@@ -6,23 +6,18 @@
         <link rel="stylesheet" href="{% url voice-media "styles/layout.css" %}" type="text/css" media="screen" charset="utf-8">
         <script type="text/javascript" charset="utf-8" src="{% url voice-media "scripts/jquery.js" %}"></script>
         <script type="text/javascript" charset="utf-8" src="{% url voice-media "scripts/bootstrap-modal.js" %}"></script>
+        <script type="text/javascript" charset="utf-8" src="{% url voice-media "scripts/bootstrap-alerts.js" %}"></script>
     </head>
     <body>
         <div class="topbar">
           <div class="topbar-inner">
-            <div class="container-fluid">
+            <div class="container">
                 <h3><a href="{% url voice-index %}">Voice</a></h3>
               <ul class="nav">
                   <li class="active">
                       <a href="{% url voice-index %}">Home</a>
                   </li>
-                <li><a href="#">Link</a></li>
-                <li><a href="#">Link</a></li>
-                <li><a href="#">Link</a></li>
               </ul>
-              <form class="pull-left" action="">
-                <input type="text" placeholder="Search">
-              </form>
               {% if request.user.is_authenticated %}
               <ul class="nav secondary-nav">
                   <li>
@@ -33,15 +28,8 @@
             </div>
           </div><!-- /topbar-inner -->
         </div><!-- /topbar -->
-        <div class='container-fluid'>
+        <div class='container'>
         {% block body %}
-        <div class='sidebar'>
-            <div class='well'>
-            {% block sidebar %}
-            {% endblock %}
-            </div>
-        </div>
-        <!-- end sidebar -->
         <div class='content'>
         {% block content %}
         <header>

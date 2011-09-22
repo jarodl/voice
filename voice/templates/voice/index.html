@@ -1,20 +1,48 @@
 {% extends "voice/layout.html" %}
 
-{% block sidebar %}
-<h6>Sidebar</h6>
-<ul>
-    <li><a href="#">Requests</a></li>
-    <li><a href="#">Link</a></li>
-    <li><a href="#">Link</a></li>
-    <li><a href="#">Link</a></li>
-</ul>
-{% endblock %}
-
 {% block header %}
 <h1>Requests</h1>
 {% endblock %}
 
 {% block main %}
+
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert-message block-message success fade in" data-alert="alert">
+        <a class="close" href="#">×</a>
+        <p><strong>Success!</strong> {{ message }}</p>
+        <div class="alert-actions">
+          <a class="btn small" href="#">Share with friends</a>
+        </div>
+    </div>
+    {% endfor %}
+{% endif %}
+
+{% if vote_form.errors %}
+<div class="alert-message block-message error fade in" data-alert="alert">
+    <a class="close" href="#">×</a>
+    <p><strong>Whoops!</strong> Looks like there was a problem voting.</p>
+    <ul class='padded'>
+        {% for field in vote_form %}
+            {% for error in field.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+    {% if vote_form.voter.errors %}
+    <form action="{% url voice-index %}" method='POST'>
+        {% csrf_token %}
+        <input id="id_request" name="request" value="{{ request_id }}" type="hidden">
+        {{ vote_form.voter }}
+        <div class="alert-actions">
+            <input type='submit' class="btn primary small" value='Try Again' />
+            <a class="btn small" href="#">Dismiss</a>
+        </div>
+    </form>
+    {% endif %}
+</div>
+{% endif %}
+
 {% for group in user_requests %}
 
 <div class='row'>
@@ -31,26 +59,28 @@
     </div>
 
     <div id="vote-for-{{ user_request.id }}" class="modal hide fade">
-      <div class="modal-header">
-        <a href="#" class="close">×</a>
-        <h3>Submit a vote for {{ user_request.title }}</h3>
-      </div>
-      <div class="modal-body">
-        <form>
-            <fieldset>
-                <div class="clearfix">
-                <label for="xlInput">Email:</label>
-                <div class="input">
-                  <input class="xlarge" id="xlInput" name="xlInput" size="30" type="text">
-                </div>
-                </div><!-- /clearfix -->
-            </fieldset>
+          <form action="{% url voice-index %}" method='POST'>
+              {% csrf_token %}
+              <div class="modal-header">
+                <a href="#" class="close">×</a>
+                <h3>Submit a vote for {{ user_request.title }}</h3>
+              </div>
+              <div class="modal-body">
+                    {{ vote_form.voter.errors }}
+                    <fieldset>
+                        <div class="clearfix">
+                            <label for="id_voter">Email:</label>
+                            <input id="id_request" name="request" value="{{ user_request.id }}" type="hidden">
+                            <div class="input">
+                                {{ vote_form.voter }}
+                            </div>
+                        </div><!-- /clearfix -->
+                    </fieldset>
+              </div>
+              <div id='inside-form' class="modal-footer">
+                  <input type='submit' class="btn primary" value='Submit Vote' />
+              </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <a href="#" class="btn primary">Submit Vote</a>
-        <a href="#" class="btn secondary">Cancel</a>
-      </div>
     </div>
 
     {% endfor %}
