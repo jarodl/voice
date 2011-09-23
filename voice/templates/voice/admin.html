@@ -17,7 +17,7 @@
         <th class="blue header">Title</th>
         <th class="green header">Description</th>
         <th class="yellow header">Status</th>
-        <th class="header headerSortDown">Votes</th>
+        <th class="header">Votes</th>
       </tr>
     </thead>
     <tbody>
@@ -36,7 +36,11 @@
 {% block endscripts %}
 <script >
   $(function() {
+    {% if sort != 'newest' %}
     $("table#sortTableExample").tablesorter({ sortList: [[3,1]] });
+    {% else %}
+    $("table#sortTableExample").tablesorter();
+    {% endif %}
   });
 </script>
 {% endblock %}
