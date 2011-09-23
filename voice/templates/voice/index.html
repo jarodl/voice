@@ -51,8 +51,10 @@
     {% for feature in group %}
 
     <div class='span4'>
-        <h3>{{ feature.title }}</h3>
-        <p>{{ feature.description }}</p>
+        <div class='feature'>
+            <h3>{{ feature.title }}</h3>
+            <p>{{ feature.description }}</p>
+        </div>
         {% if feature|votes_left > 0 %}
             <h6>{{ feature|votes_left }} votes needed</h6>
             <a class='btn' data-controls-modal="vote-for-{{ feature.id }}" data-backdrop="true" data-keyboard="true" class="btn danger">

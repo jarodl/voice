@@ -17,3 +17,7 @@ form {
 textarea {
     resize: none;
 }
+
+.feature {
+    margin-bottom: 20px;
+}
