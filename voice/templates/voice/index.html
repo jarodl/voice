@@ -1,8 +1,8 @@
 {% extends "voice/layout.html" %}
-{% load request_extras %}
+{% load feature_extras %}
 
 {% block header %}
-<h1>Requests</h1>
+<h1>Feature Requests</h1>
 {% endblock %}
 
 {% block main %}
@@ -33,7 +33,7 @@
     {% if vote_form.voter.errors %}
     <form action="{% url voice-index %}" method='POST'>
         {% csrf_token %}
-        <input id="id_request" name="request" value="{{ request_id }}" type="hidden">
+        <input id="id_feature" name="feature" value="{{ feature_id }}" type="hidden">
         {{ vote_form.voter }}
         <div class="alert-actions">
             <input type='submit' class="btn primary small" value='Try Again' />
@@ -44,38 +44,38 @@
 </div>
 {% endif %}
 
-{% for group in user_requests %}
+{% for group in grouped_features %}
 
 <div class='row'>
 
-    {% for user_request in group %}
+    {% for feature in group %}
 
     <div class='span4'>
-        <h3>{{ user_request.title }}</h3>
-        <p>{{ user_request.description }}</p>
-        {% if user_request|votes_left > 0 %}
-            <h6>{{ user_request|votes_left }} votes needed</h6>
-            <a class='btn' data-controls-modal="vote-for-{{ user_request.id }}" data-backdrop="true" data-keyboard="true" class="btn danger">
+        <h3>{{ feature.title }}</h3>
+        <p>{{ feature.description }}</p>
+        {% if feature|votes_left > 0 %}
+            <h6>{{ feature|votes_left }} votes needed</h6>
+            <a class='btn' data-controls-modal="vote-for-{{ feature.id }}" data-backdrop="true" data-keyboard="true" class="btn danger">
                 Submit a vote
             </a>
         {% else %}
-            <h6>Status: {{ user_request|state }}</h6>
+            <h6>Status: {{ feature|state }}</h6>
         {% endif %}
     </div>
 
-    <div id="vote-for-{{ user_request.id }}" class="modal hide fade">
+    <div id="vote-for-{{ feature.id }}" class="modal hide fade">
           <form action="{% url voice-index %}" method='POST'>
               {% csrf_token %}
               <div class="modal-header">
                 <a href="#" class="close">×</a>
-                <h3>Submit a vote for {{ user_request.title }}</h3>
+                <h3>Submit a vote for {{ feature.title }}</h3>
               </div>
               <div class="modal-body">
                     {{ vote_form.voter.errors }}
                     <fieldset>
                         <div class="clearfix">
                             <label for="id_voter">Email:</label>
-                            <input id="id_request" name="request" value="{{ user_request.id }}" type="hidden">
+                            <input id="id_feature" name="feature" value="{{ feature.id }}" type="hidden">
                             <div class="input">
                                 {{ vote_form.voter }}
                             </div>
@@ -97,6 +97,7 @@
 {% endif %}
 
 {% endfor %}
+
 {% endblock %}
 
 {% block footer %}

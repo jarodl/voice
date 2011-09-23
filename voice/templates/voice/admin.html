@@ -1,5 +1,5 @@
 {% extends "voice/layout.html" %}
-{% load request_extras %}
+{% load feature_extras %}
 
 {% block scripts %}
     <script type="text/javascript" charset="utf-8" src="{% url voice-media "scripts/tablesorter.js" %}"></script>
@@ -12,7 +12,7 @@
     <li><a href="#">Needs Work</a></li>
     <li><a href="#">Finished</a></li>
 </ul>
-<h1>All Requests</h1>
+<h1>All Feature Requests</h1>
 <table class="zebra-striped" id="sortTableExample">
     <thead>
       <tr>
@@ -23,12 +23,12 @@
       </tr>
     </thead>
     <tbody>
-        {% for user_request in user_requests %}
+        {% for feature in features %}
         <tr>
-            <td>{{ user_request.title }}</td>
-            <td>{{ user_request.description|truncatewords:12 }}</td>
-            <td>{{ user_request|state }}</td>
-            <td>{{ user_request|votes }}</td>
+            <td>{{ feature.title }}</td>
+            <td>{{ feature.description|truncatewords:12 }}</td>
+            <td>{{ feature|state }}</td>
+            <td>{{ feature|votes }}</td>
         </tr>
         {% endfor %}
     </tbody>

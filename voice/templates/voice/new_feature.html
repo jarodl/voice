@@ -1,0 +1,41 @@
+{% extends 'voice/layout.html' %}
+
+{% block main %}
+<div class='row'>
+    <div class='span4'>
+        <h2>Features</h2>
+        <p>Want a new feature? Submit it here. If it receives enough votes we
+        will implement it! Spread the word to your friends to help move it to
+        the top of the list.</p>
+    </div>
+    <div class='span12'>
+        <form action='#' method='POST'>
+            {% csrf_token %}
+            <fieldset>
+              <legend>Request a new feature</legend>
+              <div class="clearfix">
+                  <label for="xlInput">Title:</label>
+                  <div class='input'>
+                      {{ form.title }}
+                  </div>
+              </div><!-- /clearfix -->
+              <div class="clearfix">
+                  <label for="xlInput">Description:</label>
+                  <div class='input'>
+                      {{ form.description }}
+                  </div>
+              </div><!-- /clearfix -->
+              <div class="clearfix">
+                  <label for="xlInput">Email:</label>
+                  <div class='input'>
+                      {{ form.voter }}
+                  </div>
+              </div><!-- /clearfix -->
+              <div class="actions">
+                <input type="submit" class="btn primary" value="Submit">
+              </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock %}

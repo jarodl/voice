@@ -1,7 +1,7 @@
-from django.forms import ModelForm, ValidationError
-from voice.models import Vote
+from django import forms
+from voice.models import Vote, Feature
 
-class VoteForm(ModelForm):
+class VoteForm(forms.ModelForm):
 
     class Meta:
         model = Vote
@@ -9,14 +9,24 @@ class VoteForm(ModelForm):
 
     def clean(self):
         cleaned_data = self.cleaned_data
-        request_id = cleaned_data.get('request')
+        feature_id = cleaned_data.get('feature')
         voter = cleaned_data.get('voter')
 
-        vote = Vote.objects.filter(request=request_id, voter=voter)
+        vote = Vote.objects.filter(feature=feature_id, voter=voter)
         if vote.exists():
-            error = '%s has already voted on this request' % voter
-            self._errors['request'] = self._errors.get('request', [])
-            self._errors['request'].append(error)
-            raise ValidationError(error)
+            error = '%s has already voted on this feature' % voter
+            self._errors['feature'] = self._errors.get('feature', [])
+            self._errors['feature'].append(error)
+            raise forms.ValidationError(error)
 
         return cleaned_data
+
+class FeatureForm(forms.ModelForm):
+
+    description = forms.CharField(widget=forms.Textarea(
+        attrs={'class':'xxlarge', 'rows':3}))
+    voter = forms.EmailField()
+
+    class Meta:
+        model = Feature
+        exclude = ('votes_needed', 'created', 'state',)

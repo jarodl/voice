@@ -5,47 +5,58 @@ from django.http import HttpResponse, HttpResponseRedirect, \
 from django.contrib import messages
 
 from voice import settings
-from voice.models import Request
-from voice.forms import VoteForm
+from voice.models import Feature
+from voice.forms import VoteForm, FeatureForm 
 
 def index(request):
-    request_id = None
+    feature_id = None
     if request.method == 'POST':
         form = VoteForm(request.POST)
-        request_id = request.POST.get('request')
+        feature_id = request.POST.get('feature')
         if form.is_valid():
             vote = form.save(commit=False)
-            vote.request = Request.objects.get(id=request_id)
+            vote.feature = Feature.objects.get(id=feature_id)
             vote.save()
             messages.success(request, 'Vote successfully submitted!')
     else:
         form = VoteForm()
 
-    grouped_requests = []
+    grouped = []
     group = []
-    all_requests = Request.objects.all()
-    for i, user_request in enumerate(all_requests):
-        group.append(user_request)
+    features = Feature.objects.all()
+    for i, feature in enumerate(features):
+        group.append(feature)
         if (i + 1) % 4 == 0:
-            grouped_requests.append(group)
+            grouped.append(group)
             group = []
     if len(group) > 0:
-        grouped_requests.append(group)
+        grouped.append(group)
 
     context = RequestContext(request, {
-        'user_requests': grouped_requests,
+        'grouped_features': grouped,
         'vote_form': form,
-        'request_id': request_id,
+        'feature_id': feature_id,
         'request': request,
         })
 
     return render_to_response('voice/index.html', context)
 
+def new_feature(request):
+    if request.method == 'POST':
+        form = FeatureForm(request.POST)
+    else:
+        form = FeatureForm()
+
+    context = RequestContext(request, {
+        'form': form,
+        })
+    return render_to_response('voice/new_feature.html', context)
+
 def admin(request):
-    user_requests = Request.objects.all()
+    features = Feature.objects.all()
     return render_to_response('voice/admin.html', {
         'request': request,
-        'user_requests': user_requests,
+        'features': features,
         })
 
 def static_media(request, path):

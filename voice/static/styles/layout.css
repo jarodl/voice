@@ -13,3 +13,7 @@ form {
 .alert-actions {
     padding-top: 15px;
 }
+
+textarea {
+    resize: none;
+}

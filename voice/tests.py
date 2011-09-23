@@ -1,54 +1,54 @@
 from django.utils import unittest
 from django.db import IntegrityError
-from voice.models import Request, Vote
+from voice.models import Feature, Vote
 
-class RequestTestCase(unittest.TestCase):
+class FeatureTestCase(unittest.TestCase):
     def setUp(self):
-        self.request = Request.objects.create(title='Request',
-                description='This is a request', votes_needed=350)
+        self.feature = Feature.objects.create(title='Feature',
+                description='This is a feature', votes_needed=350)
 
     def testString(self):
-        self.assertEqual('Request', str(self.request))
+        self.assertEqual('Feature', str(self.feature))
 
     def testDefaultState(self):
-        self.assertEqual('V', self.request.state)
+        self.assertEqual('V', self.feature.state)
 
     def testChangesState(self):
-        for i in range(0, self.request.votes_needed):
+        for i in range(0, self.feature.votes_needed):
             voter = 'voter%d@domain.com' % i
-            Vote.objects.create(request=self.request, voter=voter)
-        self.assertEqual('W', self.request.state)
+            Vote.objects.create(feature=self.feature, voter=voter)
+        self.assertEqual('W', self.feature.state)
 
     def testVoting(self):
-        Vote.objects.create(request=self.request, voter='v@d.com')
-        self.assertEqual(self.request.votes.count(), 1)
+        Vote.objects.create(feature=self.feature, voter='v@d.com')
+        self.assertEqual(self.feature.votes.count(), 1)
 
 class VoteTestCase(unittest.TestCase):
     def setUp(self):
-        self.request = Request.objects.create(title='Request',
-                description='This is a request', votes_needed=350)
+        self.feature = Feature.objects.create(title='Feature',
+                description='This is a feature', votes_needed=350)
 
     def testString(self):
         voter = 'v@d.com'
-        vote = Vote.objects.create(request=self.request, voter=voter)
+        vote = Vote.objects.create(feature=self.feature, voter=voter)
         self.assertEqual(voter, str(vote))
 
     def testDisallowDuplicates(self):
         voter = 'v@d.com'
-        vote = Vote.objects.create(request=self.request, voter=voter)
+        vote = Vote.objects.create(feature=self.feature, voter=voter)
         self.assertRaises(IntegrityError, Vote.objects.create,
-                request=self.request, voter=voter)
+                feature=self.feature, voter=voter)
 
     def testDecreasesVotesNeeded(self):
-        for i in range(0, self.request.votes_needed):
+        for i in range(0, self.feature.votes_needed):
             voter = 'voter%d@domain.com' % i
-            vote = Vote.objects.create(request=self.request, voter=voter)
+            vote = Vote.objects.create(feature=self.feature, voter=voter)
 
-        self.assertEqual(self.request.votes_left(), 0)
+        self.assertEqual(self.feature.votes_left(), 0)
 
-        for i in range(self.request.votes_needed + 1,
-                self.request.votes_needed * 2):
+        for i in range(self.feature.votes_needed + 1,
+                self.feature.votes_needed * 2):
             voter = 'voter%d@domain.com' % i
-            vote = Vote.objects.create(request=self.request, voter=voter)
+            vote = Vote.objects.create(feature=self.feature, voter=voter)
 
-        self.assertEqual(self.request.votes_left(), 0)
+        self.assertEqual(self.feature.votes_left(), 0)
