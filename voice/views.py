@@ -10,16 +10,7 @@ from voice.forms import VoteForm, FeatureForm
 
 def index(request):
     feature_id = None
-    if request.method == 'POST':
-        form = VoteForm(request.POST)
-        feature_id = request.POST.get('feature')
-        if form.is_valid():
-            vote = form.save(commit=False)
-            vote.feature = Feature.objects.get(id=feature_id)
-            vote.save()
-            messages.success(request, 'Vote successfully submitted!')
-    else:
-        form = VoteForm()
+    form = VoteForm()
 
     grouped = []
     group = []
@@ -34,12 +25,33 @@ def index(request):
 
     context = RequestContext(request, {
         'grouped_features': grouped,
-        'vote_form': form,
+        'form': form,
         'feature_id': feature_id,
         'request': request,
         })
 
     return render_to_response('voice/index.html', context)
+
+def feature(request, feature_id):
+    feature = Feature.objects.get(id=feature_id)
+
+    if request.method == 'POST':
+        form = VoteForm(request.POST)
+        if form.is_valid():
+            vote = form.save(commit=False)
+            vote.feature = feature
+            vote.save()
+            messages.success(request, 'Vote successfully submitted!')
+    else:
+        form = VoteForm()
+
+    context = RequestContext(request, {
+        'form': form,
+        'request': request,
+        'feature': feature,
+        })
+
+    return render_to_response('voice/feature.html', context)
 
 def new_feature(request):
     if request.method == 'POST':

@@ -1,0 +1,43 @@
+{% extends "voice/layout.html" %}
+{% load feature_extras %}
+
+{% block main %}
+
+{% include 'voice/messages.html' %}
+
+<div class='row'>
+    <div class='span10'>
+        <div class="modal" style="position: relative; top: auto; left: auto; margin: 0 auto; z-index: 1">
+          <div class="modal-header">
+            <h3>{{ feature.title }}</h3>
+          </div>
+          <div class="modal-body">
+              <p>{{ feature.description }}</p>
+          </div>
+          <div class="modal-footer">
+              {% include 'voice/new_vote.html' %}
+          </div>
+        </div>
+    </div>
+    <div class='span6'>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Votes:</td>
+                    <td>{{ feature|votes }}</td>
+                </tr>
+                <tr>
+                    <td>Needed:</td>
+                    <td>{{ feature|votes_left }}</td>
+                </tr>
+                <tr>
+                    <td>Status:</td>
+                    <td>{{ feature|state }}</td>
+                </tr>
+            </tbody>
+        </table>
+        {% include 'voice/sharing.html' %}
+    </div>
+</div>
+
+{% endblock %}

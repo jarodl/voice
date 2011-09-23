@@ -10,6 +10,10 @@ form {
     padding: 15px 0px;
 }
 
+.padded-bottom {
+    padding-bottom: 15px;
+}
+
 .alert-actions {
     padding-top: 15px;
 }
@@ -20,4 +24,8 @@ textarea {
 
 .feature {
     margin-bottom: 20px;
+}
+
+.modal > .form-stacked {
+    padding-left: 0px;
 }

@@ -1,0 +1,8 @@
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert-message success fade in" data-alert="alert">
+        <a class="close" href="#">×</a>
+        <p><strong>Success!</strong> {{ message }}</p>
+    </div>
+    {% endfor %}
+{% endif %}

@@ -1,0 +1,27 @@
+{% if form.errors %}
+<div class="alert-message block-message error fade in" data-alert="alert">
+    <a class="close" href="#">×</a>
+    <p><strong>Whoops!</strong> Looks like there was a problem voting.</p>
+    <ul>
+        {% for field in form %}
+            {% for error in field.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+<form class='form-stacked' action="{% url voice-feature feature.id %}" method='POST'>
+    {% csrf_token %}
+    <input id="id_feature" name="feature" value="{{ feature.id }}" type="hidden">
+    <div class='clearfix'>
+        <label>Email:</label>
+        <div class='input'>
+            {{ form.voter }}
+            <span class="help-inline">Give us your email to vote!</span>
+        </div>
+    </div>
+    <div id="inside-form">
+        <input type='submit' class="btn primary" value='Submit Vote' />
+    </div>
+</form>
