@@ -77,7 +77,7 @@ def admin(request):
 
 def features_by_sort(sort):
     if sort == 'newest':
-        features = Feature.objects.filter(state='V').order_by('created')
+        features = Feature.objects.filter(state='V').order_by('-created')
     elif sort == 'in-progress':
         features = Feature.objects.filter(state='W')
     elif sort == 'finished':
