@@ -3,6 +3,7 @@ from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect, \
         Http404, HttpResponseNotModified
 from django.contrib import messages
+from django.db.models import Count
 
 from voice import settings
 from voice.models import Feature
@@ -12,9 +13,10 @@ def index(request):
     feature_id = None
     form = VoteForm()
 
+    sort, features = features_by_sort(request.GET.get('sort', None))
+
     grouped = []
     group = []
-    features = Feature.objects.all()
     for i, feature in enumerate(features):
         group.append(feature)
         if (i + 1) % 4 == 0:
@@ -28,6 +30,7 @@ def index(request):
         'form': form,
         'feature_id': feature_id,
         'request': request,
+        'sort': sort,
         })
 
     return render_to_response('voice/index.html', context)
@@ -65,11 +68,26 @@ def new_feature(request):
     return render_to_response('voice/new_feature.html', context)
 
 def admin(request):
-    features = Feature.objects.all()
+    sort, features = features_by_sort(request.GET.get('sort', None))
     return render_to_response('voice/admin.html', {
         'request': request,
         'features': features,
+        'sort': sort,
         })
+
+def features_by_sort(sort):
+    if sort == 'newest':
+        features = Feature.objects.filter(state='V').order_by('created')
+    elif sort == 'in-progress':
+        features = Feature.objects.filter(state='W')
+    elif sort == 'finished':
+        features = Feature.objects.filter(state='F')
+    else:
+        sort = 'popular'
+        features = Feature.objects.filter(state='V').annotate(
+                Count('votes')).order_by('-votes__count')
+    return (sort, features)
+
 
 def static_media(request, path):
     """

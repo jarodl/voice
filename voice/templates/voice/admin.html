@@ -6,13 +6,11 @@
 {% endblock %}
 
 {% block main %}
-<ul class="tabs">
-    <li class="active"><a href="#">All</a></li>
-    <li><a href="#">Pending</a></li>
-    <li><a href="#">Needs Work</a></li>
-    <li><a href="#">Finished</a></li>
-</ul>
-<h1>All Feature Requests</h1>
+
+{% include "voice/admin/tabs.html" %}
+
+<h1>{{ sort|capfirst }} Feature Requests</h1>
+
 <table class="zebra-striped" id="sortTableExample">
     <thead>
       <tr>

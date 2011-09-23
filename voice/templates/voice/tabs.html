@@ -1,0 +1,14 @@
+<ul class="tabs">
+    <li class="{% ifequal sort "popular" %}active{% endifequal %}">
+        <a href="{% url voice-index %}">Popular</a>
+    </li>
+    <li class="{% ifequal sort "newest" %}active{% endifequal %}">
+        <a href="{% url voice-index %}?sort=newest">Newest</a>
+    </li>
+    <li class="{% ifequal sort "in-progress" %}active{% endifequal %}">
+        <a href="{% url voice-index %}?sort=in-progress">In-progress</a>
+    </li>
+    <li class="{% ifequal sort "finished" %}active{% endifequal %}">
+        <a href="{% url voice-index %}?sort=finished">Finished</a>
+    </li>
+</ul>

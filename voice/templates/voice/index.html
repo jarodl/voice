@@ -1,11 +1,11 @@
 {% extends "voice/layout.html" %}
 {% load feature_extras %}
 
-{% block header %}
-<h1>Feature Requests</h1>
-{% endblock %}
-
 {% block main %}
+
+{% include 'voice/tabs.html' %}
+
+<h1>{{ sort|capfirst }}</h1>
 
 {% include 'voice/messages.html' %}
 
@@ -17,16 +17,19 @@
 
     <div class='span4'>
         <div class='feature'>
-            <h3><a href="{% url voice-feature feature.id %}">{{ feature.title }}</a></h3>
+            <h3>
+                <a href="{% url voice-feature feature.id %}">{{ feature.title }}&nbsp;</a>
+                <small>{{ feature|votes }} vote{{ feature|votes|pluralize }}</small>
+            </h3>
             <p>{{ feature.description }}</p>
         </div>
         {% if feature|votes_left > 0 %}
-            <h6>{{ feature|votes_left }} votes needed</h6>
-            <a class='btn' data-controls-modal="vote-for-{{ feature.id }}" data-backdrop="true" data-keyboard="true" class="btn danger">
-                Submit a vote
-            </a>
+        <h6>{{ feature|votes_left }} vote{{ feature|votes|pluralize }} needed</h6>
+        <a class='btn' data-controls-modal="vote-for-{{ feature.id }}" data-backdrop="true" data-keyboard="true" class="btn danger">
+            Submit a vote
+        </a>
         {% else %}
-            <h6>Status: {{ feature|state }}</h6>
+        <h6>Status: {{ feature|state }}</h6>
         {% endif %}
     </div>
 
