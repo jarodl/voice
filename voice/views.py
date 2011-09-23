@@ -69,7 +69,7 @@ def new_feature(request):
 
 def admin(request):
     sort, features = features_by_sort(request.GET.get('sort', None))
-    return render_to_response('voice/admin.html', {
+    return render_to_response('voice/admin/index.html', {
         'request': request,
         'features': features,
         'sort': sort,
