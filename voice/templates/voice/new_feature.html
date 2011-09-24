@@ -1,6 +1,9 @@
 {% extends 'voice/layout.html' %}
 
 {% block main %}
+
+{% include 'voice/messages.html' %}
+
 <div class='row'>
     <div class='span4'>
         <h2>Features</h2>
@@ -9,7 +12,7 @@
         the top of the list.</p>
     </div>
     <div class='span12'>
-        <form action='#' method='POST'>
+        <form action="{% url voice-new-feature %}" method='POST'>
             {% csrf_token %}
             <fieldset>
               <legend>Request a new feature</legend>

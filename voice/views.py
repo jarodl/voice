@@ -59,6 +59,12 @@ def feature(request, feature_id):
 def new_feature(request):
     if request.method == 'POST':
         form = FeatureForm(request.POST)
+        if form.is_valid():
+            feature = form.save(commit=False)
+            feature.votes_needed = settings.DEFAULT_VOTES_NEEDED
+            feature.save()
+            messages.success(request, 'Thanks for requesting a feature!')
+            form = FeatureForm()
     else:
         form = FeatureForm()
 
