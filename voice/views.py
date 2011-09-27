@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect, \
         Http404, HttpResponseNotModified
@@ -64,7 +64,7 @@ def new_feature(request):
             feature.votes_needed = settings.DEFAULT_VOTES_NEEDED
             feature.save()
             messages.success(request, 'Thanks for requesting a feature!')
-            form = FeatureForm()
+            return redirect('voice-feature', feature_id=feature.id)
     else:
         form = FeatureForm()
 
