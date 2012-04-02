@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Voice by jarodl</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Voice</h1>
+        <p>A votebox for letting users request features.</p>
+        <p class="view"><a href="https://github.com/jarodl/voice">View the Project on GitHub <small>jarodl/voice</small></a></p>
+        <ul>
+          <li><a href="https://github.com/jarodl/voice/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/jarodl/voice/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/jarodl/voice">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h2>Setup</h2>
+
+<pre><code>pip install voice
+</code></pre>
+
+<p>In <code>settings.py</code>:</p>
+
+<pre><code>INSTALLED_APPS = (
+    ...
+    'voice',
+)
+</code></pre>
+
+<p>In <code>urls.py</code>:</p>
+
+<pre><code>urlpatterns = patterns('',
+    (r'^$', include('voice.urls', namespace='voice')),
+)
+</code></pre>
+
+<p>For further usage, look at the provided <code>example_project</code>.</p>
+
+<h2>Screens</h2>
+
+<p><img src="http://s3.amazonaws.com/jarodlrandom/admin_view.png" alt="admin view"></p>
+
+<p><img src="http://s3.amazonaws.com/jarodlrandom/feature_view.png" alt="feature view"></p>
+
+<p><img src="http://s3.amazonaws.com/jarodlrandom/main_view.png" alt="main view"></p>
+
+<p><img src="http://s3.amazonaws.com/jarodlrandom/vote_view.png" alt="vote view"></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/jarodl">jarodl</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+</html>
